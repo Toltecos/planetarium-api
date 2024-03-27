@@ -29,7 +29,8 @@ class PlanetariumDome(models.Model):
 
 def astronomy_show_image_file_path(instance, filename):
     filename = (
-        f"{slugify(instance.title)}-{uuid.uuid4()}" + pathlib.Path(filename).suffix
+        f"{slugify(instance.title)}-{uuid.uuid4()}"
+        + pathlib.Path(filename).suffix
     )
     return pathlib.Path("upload/astronomy_show/") / pathlib.Path(filename)
 
@@ -38,7 +39,10 @@ class AstronomyShow(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
     themes = models.ManyToManyField(to=ShowTheme, related_name="themes")
-    image = models.ImageField(null=True, upload_to=astronomy_show_image_file_path)
+    image = models.ImageField(
+        null=True,
+        upload_to=astronomy_show_image_file_path
+    )
 
     class Meta:
         ordering = ["title"]
@@ -48,8 +52,14 @@ class AstronomyShow(models.Model):
 
 
 class ShowSession(models.Model):
-    astronomy_show = models.ForeignKey(AstronomyShow, on_delete=models.CASCADE)
-    planetarium_dome = models.ForeignKey(PlanetariumDome, on_delete=models.CASCADE)
+    astronomy_show = models.ForeignKey(
+        AstronomyShow,
+        on_delete=models.CASCADE
+    )
+    planetarium_dome = models.ForeignKey(
+        PlanetariumDome,
+        on_delete=models.CASCADE
+    )
     show_time = models.DateTimeField()
 
     class Meta:
@@ -60,7 +70,10 @@ class ShowSession(models.Model):
 
 
 class Reservation(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE
+    )
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -82,7 +95,11 @@ class Ticket(models.Model):
 
     @staticmethod
     def validate_ticket(row, seat, planetarium_dome, error_to_raise):
-        for ticket_attr_value, ticket_attr_name, planetarium_dome_attr_name in [
+        for (
+            ticket_attr_value,
+            ticket_attr_name,
+            planetarium_dome_attr_name
+        ) in [
             (row, "row", "rows"),
             (seat, "seat", "seats_in_row"),
         ]:

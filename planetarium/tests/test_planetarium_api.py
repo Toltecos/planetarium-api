@@ -10,7 +10,10 @@ from rest_framework.test import APIClient
 from rest_framework import status
 
 from planetarium.models import ShowTheme, AstronomyShow, ShowSession, PlanetariumDome
-from planetarium.serializers import AstronomyShowListSerializer, AstronomyShowDetailSerializer
+from planetarium.serializers import (
+    AstronomyShowListSerializer,
+    AstronomyShowDetailSerializer,
+)
 
 
 ASTRONOMY_SHOW_URL = reverse("planetarium:astronomyshow-list")

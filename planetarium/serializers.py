@@ -118,10 +118,7 @@ class TicketSerializer(serializers.ModelSerializer):
 
 
 class TicketListSerializer(TicketSerializer):
-    show_session = ShowSessionListSerializer(
-        many=False,
-        read_only=True
-    )
+    show_session = ShowSessionListSerializer(many=False, read_only=True)
 
 
 class TicketSeatsSerializer(TicketSerializer):
